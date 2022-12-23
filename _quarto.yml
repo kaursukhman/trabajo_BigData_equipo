@@ -1,0 +1,44 @@
+project:
+  type: website
+  output-dir: docs   #- carpeta donde se generará el blog
+
+#- 2/ Opciones referentes a la estructura de la web -----------------
+
+website:
+  title: "Streaming VS cine"
+  site-url: https://kaursukhman.github.io/trabajo_equipo/             #- hay que rellenarlos
+  repo-url: https://github.io/kaursukhman/trabajo_equipo
+  navbar:
+    logo: "cine.jpg"
+    background: "skyblue" 
+    foreground: "mintcream" 
+    right:
+      - text: "Trabajo en equipo"
+        href: blog_Streaming_services.qmd
+      - text: "Slides"
+        href: my_slides.qmd
+      - icon: github
+        href: https://github.com/<kaursukhman>
+      - icon: twitter
+        href: https://twitter.com/<tu-usuario twitter>
+      - icon: envelope
+        url: "mailto:<kaursukh@alumni.uv.es>"
+  page-footer:
+    border: true
+    background: "skyblue"         #--
+    left: "© 2022 Juliet, Sukhman y Juan David"   #--
+    center: "Hecho con [Quarto](https://quarto.org)"
+    right:
+      - icon: github
+        href: https://github.com/kaursukhman 
+      - icon: twitter
+        href: https://twitter.com/<tu-usuario-twitter>  #-----
+      - icon: envelope
+        url: "mailto:<tu-mail>@alumni.uv.es"   
+ 
+format:
+  html:
+    theme: lux  
+    css: styles.css
+    toc: true
+    highlight-style: a11y

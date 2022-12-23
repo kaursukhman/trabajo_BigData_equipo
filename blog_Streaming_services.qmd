@@ -1,0 +1,543 @@
+---
+title: "Streaming Vs Cine"
+description: |
+  Analizando el mundo de entretenamiento
+author: 
+- name: Sukhman Kaur (kaursukh@alumni.uv.es)
+- name: Juliet Allegra(juluacpe@alumni.uv.es)
+- name: Juan David (riosme@alumni.uv.es)
+afflitation: Universitat de Valencia 
+date: 2022/12/23
+categories: [trabajo Big Data]
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: false
+  filter-ui: false
+page-layout: full
+title-block-banner: true
+title-block-banner-color: "mintcream"
+smooth-scroll: true
+---
+
+Repo utilizado para elaborar el trabajo en equipo para la asignatura "Programación y manejo de datos en la era del Big Data" de la Universitat de València durante el curso 2022-2023. La página web de la asignatura puede verse: [aqui](https://perezp44.github.io/intro-ds-22-23-web/.)
+
+## Introducción
+
+Las películas son un método de entretenimiento digital y expresión artística. Permiten sumergirse en una realidad totalmente distinta, contar una historia y transmitir emociones a través de una pantalla. El consumo de películas ha cambiado a lo largo de los años, el método convencional de ver películas es el cine, pero con la evolución de la tecnología se han creado nuevos medios consumo de entretenimiento digital. Ahora existen los "Streaming Services", que permiten disfrutar de un extenso catálogo de películas a través de internet desde la comodidad de su propia casa. Analizaremos la evolución de consumos de películas, Streaming Services VS Cine. Y, compararemos los diferentes Streaming Services usando los datos de Netflix, Disney+, PrimeVideo y Hulu.
+
+## Datos
+
+Obtuvimos datos de distintas fuentes para nuestra investigación.En principio, los datos sobre los ingresos de Cine lo obtuvimos de [The Numbers](https://www.the-numbers.com/market/) que son basados en el mercado doméstico de cine. El mercado doméstico se define por el territorio de América del norte (Estados Unidos, Canadá, Puerto Rico y Guam). Luego, creamos un dataset con esta información el cual está en formato xlsx.
+
+Proseguimos a realizar un dataset sobre los ingresos de los streaming services. Los ingresos de [Netflix](https://www.macrotrends.net/stocks/charts/NFLX/netflix/revenue), [Hulu](https://www.businessofapps.com/data/hulu-statistics/), [Disney+](https://www.demandsage.com/disney-users/), [AmazonPrime](https://www.matthewwoodward.co.uk/work/amazon-prime-statistics/) que incluyen PrimeVideo, Audiobooks, Digital Musica, E-books y entre otros.
+
+Y por último obtuvimos los datos de Streaming Service de un Dataset de [Kaggle](https://www.kaggle.com/code/wenyihsu/data-visualization-movie-recommendation/data) sobre películas de Netflix, PrimeVideo, Hulu y Disney+ con sus correspondientes calificaciones de IMDB y Rotten Tomatoes.
+
+![](cine.jpg){fig-align="center"}
+
+```{r,  echo =FALSE, results='hide', message=FALSE, warning=FALSE}
+
+library(readxl)
+library(tidyverse)
+library(ggplot2)
+library(gridExtra)
+library(ggridges)
+library(RColorBrewer)
+library(gganimate)
+library(ggthemes)
+library(prettydoc)
+library(stargazer)
+library(sjPlot)
+
+#devtools::install_github('Mikata-Project/ggthemr')
+library(ggthemr)
+
+ggthemr("sky")
+
+#Revenues de Cine  
+D1 <- read_excel("./datos/datoscine.xlsx")
+
+D1 = D1 %>% rename(ing_sin_inf = "INGRESOS AJUSTADOS INFLACION")
+
+D1$INGRESOS <- as.numeric(gsub(",","",D1$INGRESOS))
+
+```
+
+## Análisis según sus ingresos
+
+::: panel-tabset
+#### Evolucion del cine segun sus ingresos
+
+```{r, echo =FALSE, results='hide', message=FALSE, warning=FALSE}
+d1a <- D1 %>% 
+  select("YEAR","INGRESOS")
+
+p1 <- ggplot(d1a, aes(x=YEAR, y=INGRESOS)) + 
+  geom_line() +
+  geom_point(shape=21, size=2) + labs(title = "Ingresos anuales box office de Norte America en dolares", subtitle = "(1995-2022)", caption = "Fuente: Nash information services LLC") +
+  scale_x_continuous("Año", limits = c(1995, 2022)) + 
+  scale_y_continuous("Ingresos", labels = scales::dollar) +  theme(legend.position = "top")
+p1
+
+```
+
+Los ingresos anuales de box office en su mayoria tiene una tendencia creciente, hasta que ocurre una fuerte caida. Como podemos observar, el declive de los ingresos taquilleros se debe a la pandemia de Covid-19 en el 2020. Tras este suceso, los ingresos de box office retoman la tendencia creciente aunque no a la misma magnitud antes de la pandemia.
+
+#### Evolucion de los streaming services segun sus ingresos
+
+```{r, echo =FALSE, results='hide', message=FALSE, warning=FALSE}
+D2 <- read_excel("./datos/Streamingrevenues.xlsx", sheet = "SVOD")
+
+data_1 <- data.frame(
+  year  = c(2009,2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021),  
+  Netflix = c(1670000000,	2163000000,	3205000000,	3609000000,	4375000000,	5505000000,	6780000000,	8831000000,	11693000000,	15794000000,	20156000000,	24996000000,	29698000000), 
+  Disney = c(NA,	NA,	NA,	NA,	NA,	NA,	NA,	NA,	NA,	NA, NA,	2802000000,	5293000000),
+  Prime= c(NA,	NA,	NA,	NA,	NA,	2760000000,	4470000000,	6390000000,	9720000000,	14170000000,	19210000000,	25210000000,	31770000000),
+  Hulu= c( NA,	200000000,	400000000,	600000000,	1100000000,	1600000000,	2000000000,	2400000000,	3100000000,	3500000000,	4500000000,	7200000000,	9600000000))
+str(data_1)
+
+data_wide <- data_1
+
+data_long <- data_wide %>% 
+  tidyr::pivot_longer(cols = 2:5, names_to = "SOV")
+
+
+p2 <- ggplot(data_long, aes(x=year, y=value, color= SOV)) +
+  geom_line() +
+  geom_point(shape=21, size=2) +
+  labs(title = "Ingresos anuales de streaming services en dolares", subtitle = "(2009-2021)", caption = "Fuente: Kaggle dataset by RUCHI BHATIA") +
+  scale_x_continuous("Año", limits = c(2009, 2021)) + 
+  scale_y_continuous("Ingresos", labels = scales::dollar) +  theme(legend.position = "top")
+p2
+
+```
+
+Los ingresos anuales de los streaming services tienen una tendencia creciente durante todo su periodo. Como podemos observar, los ingresos de Netflix y PrimeVideo son significativamente mayores al resto. Es importante destacar que Disney+ es relativamente nuevo, ya que su inauguración fue a finales del 2019 y esta podría ser una de la razones de sus ingresos comparativamente bajos.
+
+#### Comparacion de ingresos anuales, SVOD VS Cine
+
+```{r, echo =FALSE, results='hide', message=FALSE, warning=FALSE}
+
+data3_a = d1a %>% rename(year = YEAR, value = INGRESOS) %>%
+  mutate(SOV = "cine")
+
+Data_1y2 <- full_join(data3_a,data_long, by= c("SOV", "year" = "year", "value" = "value")) 
+
+p_ambos = ggplot(Data_1y2, aes(x=year, y=value, color= SOV)) +
+  geom_line() +
+  geom_point(shape=21, size=2) + labs(title = "Comparacion de ingresos anuales, SVOD VS Cine", subtitle = "(1995-2021)", caption = "Fuente: Kaggle dataset by RUCHI BHATIA & Nash information services LLC")+
+  scale_x_continuous("Año", limits = c(2009, 2021)) + 
+  scale_y_continuous("Ingresos", labels = scales::dollar)+  theme(legend.position = "top") + transition_reveal(year) 
+p_ambos
+
+animate(p_ambos, duration = 8, fps = 20, width = 500, height = 500, renderer = gifski_renderer())
+anim_save("output.gif")
+
+
+sum_de_streaming = data_1 %>% rowwise() %>% 
+  mutate(value = sum(Netflix, Disney, Prime, Hulu, na.rm = TRUE)) %>%
+  mutate(SOV = "streaming")
+view(sum_de_streaming)
+cine_y_sumStreaming = full_join(data3_a, sum_de_streaming, by= c("SOV", "year" = "year", "value" = "value"))
+
+pp_ambos = ggplot(cine_y_sumStreaming, aes(x=year, y=value, color= SOV)) + geom_line() +  geom_point(shape=21, size=2) + labs(title = "Comparacion de ingresos anuales, SVOD VS Cine", subtitle = "(1995-2021)", caption = "Fuente: Kaggle dataset by RUCHI BHATIA & Nash information services LLC") + theme(legend.position = "top") + transition_reveal(year) 
+  pp_ambos
+
+animate(pp_ambos, duration = 8, fps = 20, width = 500, height = 500, renderer = gifski_renderer())
+anim_save("output2.gif")
+
+
+```
+
+![](output.gif){fig-align="center"}
+
+![](output2.gif){fig-align="center"}
+
+Los resultados de la comparación de cine y streaming services son contundente para el cine. En el 2017, los ingresos de Netflix ya eran superiores a los ingresos de cine. Desde el 2018 los ingresos de Netflix y PrimeVideo son mayores que los de cines, en cambio Hulu aún permanece debajo del cine. Tras la pandemia de Covid-19 todos los ingresos de los streaming services son mayores que el cine. Esto nos da entender que en los últimos 6 años la audiencia se ha desviado a usar más el método de streaming service para el consumo de películas que el método tradicional del cine.
+:::
+
+## Comparación entre los Streaming Services
+
+::: panel-tabset
+#### Comparación entre la cantidad de peliculas según cada SVOD
+
+```{r, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
+
+ Streaming_full <- read.csv(file = 'datos/MoviesOnStreamingPlatforms.csv')
+ 
+ Streaming_full_separado <- Streaming_full %>% separate(col = Rotten.Tomatoes, 
+                                                        into = c("score", "borrar"),
+                                                        sep  = "/") %>% select(-borrar) 
+ 
+ Streaming_full_separado$score <- as.numeric(Streaming_full_separado$score) 
+ 
+ Streaming_full_separado = Streaming_full_separado %>% drop_na() %>% mutate(servicio = ifelse(Netflix == 1, "netflix",
+                                                                                ifelse(Hulu == 1, "hulu",
+                                                                                       ifelse(Prime.Video == 1, "prime",
+                                                                                              ifelse(Disney. == 1, "disney", "ups")))))  
+ 
+ ##ojala_cero = Streaming_full_separado %>% filter(servicio == "ups")
+#prueba = dplyr::count(iris, Species, wt = Sepal.Length)
+
+cantidad_de_peliculas =  Streaming_full_separado %>% count(servicio, name = "cantidad")
+
+
+cantidad_de_peliculas_plot = cantidad_de_peliculas %>% ggplot(aes(x=servicio, y=cantidad, fill= cantidad)) + 
+  geom_bar(stat = "identity") +
+  labs(title = "Cantidad de peliculas segun cada SVOD", subtitle = "(2009-2021)", caption = "Fuente: Kaggle dataset by RUCHI BHATIA") +  theme()
+cantidad_de_peliculas_plot
+
+```
+
+Podemos observar la cantidad de las peliculas disponible en Netflix y PrimeVideo es mucho mayor que Disney y Hulu. Netflix y PrimeVideo están disponible en más países que otros servicios de streaming. El tamaño de sus bibliotecas es enorme, por otro lado Disney es muy nuevo por tanto su catalogo es mas limitado. En cuanto a Hulu, su catálogo de películas está por debajo de Netflix y PrimeVideo por alrededor de 3500 películas.
+
+#### Comparación entre la cantidad de peliculas por genero según cada SVOD
+
+```{r, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
+datos_completicos <- read.csv(file = 'datos/movies_updated.csv')
+para_comparargeneros = datos_completicos %>% drop_na() %>% mutate(servicio = ifelse(Netflix == 1, "netflix",
+                                                                                ifelse(Hulu == 1, "hulu",
+                                                                                       ifelse(Prime.Video == 1, "prime",
+                                                                                              ifelse(Disney. == 1, "disney", "ups"))))) %>%
+  select(ID,Title,Genres, servicio) 
+para_comparargeneros = para_comparargeneros %>% separate(col = Genres, 
+                                                         into = c("g1","g2","g3","g4","g5"),
+                                                         sep  = ",")
+gg1 = para_comparargeneros[ , c("servicio","g1")] 
+gg2 = para_comparargeneros[ , c("servicio","g2")] %>% rename("g1" = "g2")
+gg3 = para_comparargeneros[ , c("servicio","g3")]%>% rename("g1" = "g3")
+gg4 = para_comparargeneros[ , c("servicio","g4")]%>% rename("g1" = "g4")
+gg5 = para_comparargeneros[ , c("servicio","g5")]%>% rename("g1" = "g5")
+
+gg1 = gg1 %>% bind_rows(gg1, gg2) %>% bind_rows(gg1, gg3) %>% bind_rows(gg1, gg4) %>% bind_rows(gg1, gg5) %>% drop_na()
+
+solo_nesflis = gg1 %>% filter(servicio == "netflix")
+plott_netflix= solo_nesflis %>% ggplot(aes(g1)) + geom_bar() + labs(title = "Netflix") +  coord_flip() 
+
+
+solo_disney = gg1 %>% filter(servicio == "disney")
+
+plott_disney = solo_disney %>% ggplot(aes(g1)) + geom_bar() + labs(title = "Disney")+  coord_flip()
+
+solo_hulu = gg1 %>% filter(servicio == "hulu")
+
+plott_hulu = solo_hulu %>% ggplot(aes(g1)) + geom_bar() +  labs(title = "Hulu") +  coord_flip()
+
+solo_prime = gg1 %>% filter(servicio == "prime")
+
+plott_prime = solo_prime %>% ggplot(aes(g1)) + geom_bar() + labs(title = "PrimeVideo") +  coord_flip() 
+
+options(repr.plot.width = 6, repr.plot.height =3)
+grid.arrange(plott_netflix, plott_disney, plott_hulu , plott_prime, ncol = 4)
+
+    
+prueba = gg1 %>% group_by(servicio) %>% na.omit() %>% filter(!g1 %in% c(""))  %>% count(g1) 
+
+options(scipen=999)
+generos_para_regresion = prueba %>%group_by(servicio) %>% mutate(n_porcentaje = n/sum(n))
+generos_para_regresion$servicio <- as.factor(generos_para_regresion$servicio)
+
+generos_para_regresion_n  = generos_para_regresion %>% pivot_wider(names_from = g1, values_from = n, id_cols = servicio)
+generos_para_regresion_porcentaje = generos_para_regresion %>% pivot_wider(names_from = g1, values_from = n_porcentaje, id_cols = servicio)
+
+
+```
+
+El grafico muestra los top 12 géneros basados en la cantidad de películas. Comparando el número de películas por género en las 4 plataformas, observamos que los géneros de comedia y drama son lideres. Los resto de géneros muestran resultados significativos menores al género de comedia y drama.
+:::
+
+#### Comparación de cada Streaming Service según sus Scores
+
+::: panel-tabset
+#### Rotten Tomatoes
+
+```{r, echo =FALSE, results='hide', message=FALSE, warning=FALSE}
+
+Streaming_full_separado_2 = Streaming_full_separado %>% drop_na() %>% group_by(servicio) %>% summarise(avg = mean(score))
+
+Streaming_full_separado_2_plot = Streaming_full_separado_2 %>% ggplot(aes(x=servicio, y=avg, fill= avg)) + geom_bar(stat = "identity") + labs(title = "Comparacion dentro de cada  SVOD segun su Rotten Tomatoes score", subtitle = "(2009-2021)", caption = "Fuente: Kaggle dataset by RUCHI BHATIA") +  theme()
+
+Streaming_full_separado_2_plot
+
+```
+
+Aqui podemos ver, aunque Hulu tiene el menor número de películas (según las figuras anteriores), ofrece la mejor calidad de películas según Rotten Tomatoes, por lo que merece la pena que los espectadores exploren las películas del sitio. Por el contrario, aunque Prime Video tiene el mayor número de películas, la calidad de las películas está por debajo de la media según la clasificación de Rotten Tomatoes.
+
+#### IMDb
+
+```{r, echo =FALSE, results='hide', message=FALSE, warning=FALSE}
+datos_imbd = read.csv(file = 'datos/movies_updated.csv') 
+view(datos_imbd)
+datos_imbd = datos_imbd %>% drop_na() %>% mutate(servicio = ifelse(Netflix == 1, "netflix",
+                                                                                            ifelse(Hulu == 1, "hulu",
+                                                                                                   ifelse(Prime.Video == 1, "prime",
+                                                                                                          ifelse(Disney. == 1, "disney", "ups"))))) %>% select(Title, servicio, IMDb)
+datos_imbd_regresion = datos_imbd %>% group_by(servicio) %>% summarise(avg_IMDb = mean(IMDb))
+
+
+IMDb_plot = datos_imbd_regresion %>% ggplot(aes(x=servicio, y=avg_IMDb, fill= avg_IMDb)) + 
+  geom_bar(stat = "identity")+ labs(title = "Comparacion dentro de cada  SVOD segun su IMDb score", subtitle = "(2009-2021)", caption = "Fuente: Kaggle dataset by RUCHI BHATIA") +  theme()
+
+IMDb_plot 
+
+```
+
+Podemos observar que, en comparación con Rotten Tomatoes Disney ofrece la mejor calidad de películas. Luego, Netflix y Hulu. Ambas coinciden que a pesar de su extenso catálogo Prime Video posee la mayor cantidad de películas de baja calidad.
+:::
+
+## Comparación entre plataformas segun su clasificacion de edad por pelicula
+
+El cero quiere decir es disponible para todo público y podemos observar que todos tienen una alta cantidad de películas apta para todo público. En segundo lugar, Netflix, Prime Video y Hulu tiene el número más alto disponible es para los jóvenes adultos y adultos. No es de extrañar que Disney+ ofrezca la mayor cantidad de películas que pueden ver todos los grupos de edad, pero con un mayor enfoque en los niños.
+
+::: panel-tabset
+#### Distribución
+
+```{r, echo =FALSE, results='hide', message=FALSE, warning=FALSE}
+para_distribuciones = Streaming_full %>% drop_na() %>% mutate(servicio = ifelse(Netflix == 1, "netflix",
+                                                                               ifelse(Hulu == 1, "hulu",
+                                                                              ifelse(Prime.Video == 1, "prime",
+                                                                                  ifelse(Disney. == 1, "disney", "ups"))))) %>%
+                                                       select(ID,Title,Year,Age, servicio) 
+
+para_distribuciones$Age <- ifelse(para_distribuciones$Age=="", 0, para_distribuciones$Age)
+para_distribuciones$Age <- ifelse(para_distribuciones$Age=="all", 0, para_distribuciones$Age)
+para_distribuciones$Age = as.numeric(gsub("\\+", "", para_distribuciones$Age))
+
+
+#bruta distribucion de numero de movies por age 
+#p <- para_distribuciones %>% ggplot(aes(Age)) + geom_bar() + facet_wrap(vars(servicio), nrow = 2, ncol = 2)  p
+
+# ajustado a tamaño distribucion de numero de movies por age 
+segundo_age = para_distribuciones %>% group_by(servicio) %>% count(Age)
+
+segundo_age_hulu = segundo_age %>% filter(servicio == "hulu") %>% ungroup() %>% mutate(porcentaje = n/sum(n)) 
+
+segundo_age_disney = segundo_age %>% filter(servicio == "disney") %>% ungroup() %>% mutate(porcentaje = n/sum(n))
+
+segundo_age_netflix = segundo_age %>% filter(servicio == "netflix") %>% ungroup() %>% mutate(porcentaje = n/sum(n))
+
+segundo_age_prime = segundo_age %>% filter(servicio == "prime") %>% ungroup() %>% mutate(porcentaje = n/sum(n))
+
+
+plot_hulu = ggplot(data=segundo_age_hulu , aes(x=Age, y=porcentaje)) +
+  geom_bar(stat="identity") + labs(title = "Hulu")
+
+plot_disney = ggplot(data=segundo_age_disney , aes(x=Age, y=porcentaje)) +
+  geom_bar(stat="identity")+ labs(title = "Disney")
+
+plot_netflix = ggplot(data=segundo_age_netflix, aes(x=Age, y=porcentaje)) +
+  geom_bar(stat="identity") + labs(title = "Netflix")
+
+plot_prime = ggplot(data=segundo_age_prime, aes(x=Age, y=porcentaje)) +
+  geom_bar(stat="identity")+ labs(title = "PrimeVideo")
+
+plot_las4distribuciones = grid.arrange(plot_hulu, plot_disney, plot_netflix, plot_prime) + theme()
+plot_las4distribuciones 
+
+
+```
+
+#### Densidad
+
+```{r, echo =FALSE, results='hide', message=FALSE, warning=FALSE}
+#despues gemom density todo junto
+plot_distribucionesjuntas = ggplot(segundo_age, aes(Age, servicio)) + geom_density_ridges(aes(fill = servicio), alpha = 0.5)
+plot_distribucionesjuntas
+
+```
+:::
+
+## Comparación entre plataformas segun el año de estreno por pelicula
+
+La comparación ilustra que Prime Video posee un catálogo más extenso según el año de estreno por película. Disney+ igual presta un amplio catálogo de películas que extienden un extenso periodo de tiempo. Ambas poseen una variedad de peliculas estrenadas desde 1930 a 2022. En cambio, Hulu y Netflix ofrecen películas con años de estreno más recientes, especifico estrenos de los años 2000-2020.
+
+::: panel-tabset
+#### Distribución
+
+```{r, echo =FALSE, results='hide', message=FALSE, warning=FALSE}
+#p2 <- para_distribuciones %>% ggplot(aes(Year)) + geom_bar() + facet_wrap(vars(servicio), nrow = 2, ncol = 2)  p2
+
+segundo_year = para_distribuciones %>% group_by(servicio) %>% count(Year)
+
+segundo_year_hulu = segundo_year %>% filter(servicio == "hulu") %>% ungroup() %>% mutate(porcentaje = n/sum(n))
+#------
+segundo_year_disney = segundo_year %>% filter(servicio == "disney") %>% ungroup() %>% mutate(porcentaje = n/sum(n))
+
+segundo_year_netflix = segundo_year %>% filter(servicio == "netflix") %>% ungroup() %>% mutate(porcentaje = n/sum(n))
+
+segundo_year_prime = segundo_year %>% filter(servicio == "prime") %>% ungroup() %>% mutate(porcentaje = n/sum(n))
+
+
+plot_hulu2 = ggplot(data=segundo_year_hulu , aes(x=Year, y=porcentaje)) +
+  geom_bar(stat="identity") + labs(title = "Hulu")
+
+plot_disney2 = ggplot(data=segundo_year_disney , aes(x=Year, y=porcentaje)) +
+  geom_bar(stat="identity") + labs(title = "Disney")
+
+plot_netflix2 = ggplot(data=segundo_year_netflix, aes(x=Year, y=porcentaje)) +
+  geom_bar(stat="identity") + labs(title = "Netflix")
+
+plot_prime2 = ggplot(data=segundo_year_prime, aes(x=Year, y=porcentaje)) +
+  geom_bar(stat="identity") + labs(title = "PrimeVideo")
+
+plot_las4distribuciones2 = grid.arrange(plot_hulu2, plot_disney2, plot_netflix2, plot_prime2) + theme()
+plot_las4distribuciones
+
+```
+
+#### Densidad
+
+```{r, echo =FALSE, results='hide', message=FALSE, warning=FALSE}
+plot_distribucionesjuntas2 = ggplot(segundo_year, aes(Year, servicio)) + geom_density_ridges(aes(fill = servicio), alpha = 0.5)
+plot_distribucionesjuntas2
+
+```
+:::
+
+## Regresión
+
+Realizamos una regresión entre los streaming services y sus respectivas calificaciones según Rotten Tomatoes y IMDb. El resultado de 0.498 significa que el modelo explica el 50% de la variabilidad de los datos de respuesta en torno a su media. Entonces el modelo explicar aproximadamente la mitad de la variación observada. Además, hay que tomar en cuenta que su valor de p indica una relación débil y poco significante.
+
+::: panel-tabset
+#### Muestra de que tanto influye el rating de una película en una plataforma sobre la otra
+
+```{r, echo =FALSE, results='hide', message=FALSE, warning=FALSE}
+
+datos_completicos <- read.csv(file = 'datos/movies_updated.csv')
+para_comparargeneros = datos_completicos %>% drop_na() %>% mutate(servicio = ifelse(Netflix == 1, "netflix",
+                                                                                    ifelse(Hulu == 1, "hulu",
+                                                                                           ifelse(Prime.Video == 1, "prime",
+                                                                                                  ifelse(Disney. == 1, "disney", "ups"))))) %>%
+  select(ID,Title,Genres, servicio) 
+para_comparargeneros = para_comparargeneros %>% separate(col = Genres, 
+                                                         into = c("g1","g2","g3","g4","g5"),
+                                                         sep  = ",")
+gg1 = para_comparargeneros[ , c("servicio","g1")] 
+gg2 = para_comparargeneros[ , c("servicio","g2")] %>% rename("g1" = "g2")
+gg3 = para_comparargeneros[ , c("servicio","g3")]%>% rename("g1" = "g3")
+gg4 = para_comparargeneros[ , c("servicio","g4")]%>% rename("g1" = "g4")
+gg5 = para_comparargeneros[ , c("servicio","g5")]%>% rename("g1" = "g5")
+
+gg1 = gg1 %>% bind_rows(gg1, gg2) %>% bind_rows(gg1, gg3) %>% bind_rows(gg1, gg4) %>% bind_rows(gg1, gg5) %>% drop_na()
+prueba = gg1 %>% group_by(servicio) %>% na.omit() %>% filter(!g1 %in% c(""))  %>% count(g1) 
+
+options(scipen=999)
+generos_para_regresion = prueba %>%group_by(servicio) %>% mutate(n_porcentaje = n/sum(n))
+generos_para_regresion$servicio <- as.factor(generos_para_regresion$servicio)
+
+generos_para_regresion_n  = generos_para_regresion %>% pivot_wider(names_from = g1, values_from = n, id_cols = servicio)
+generos_para_regresion_porcentaje = generos_para_regresion %>% pivot_wider(names_from = g1, values_from = n_porcentaje, id_cols = servicio)
+#Regression analysis
+dedos <- read_excel("./datos/Streamingrevenues.xlsx", sheet = "SVOD") #ingresos con años #incluir ingresos año pasado como variable explicativa
+
+ingressos_2021 = dedos %>% select("YEAR","2021") %>% mutate(servicio = tolower(YEAR), .before = YEAR) %>% select(-YEAR) %>%
+  rename("beneficios_2021" = "2021")
+ingressos_2020 = dedos %>% select("YEAR","2020") %>% mutate(servicio = tolower(YEAR), .before = YEAR) %>% select(-YEAR) %>%
+  rename("beneficios_2020" = "2020") 
+view(cantidad_de_peliculas)
+
+cantidad_de_peliculas <- cantidad_de_peliculas %>% rename(cantidad_de_movies = cantidad)
+
+#.------------------------------------------#esta hacerla mean de rt y imbd#.------------------------------------------
+datos_imbd_paraRT = datos_imbd %>% group_by(servicio) %>% summarise(peliz_imbd_adj = sum(IMDb)) 
+
+cantidad_de_peliculas_ajustadoRT = Streaming_full_separado %>%  group_by(servicio) %>% summarise(sum = sum(score))
+
+
+cantidad_de_peliculas_ajustadoRT = cantidad_de_peliculas_ajustadoRT %>% rename(pelis_multiplicadopor_rt = sum)
+
+q_peliculas_ajustado_calidad = full_join(datos_imbd_paraRT,cantidad_de_peliculas_ajustadoRT) %>%
+  mutate(IMDB_nuevo = peliz_imbd_adj *10)
+view(q_peliculas_ajustado_calidad)
+
+q_peliculas_ajustado_calidad = q_peliculas_ajustado_calidad %>%
+  mutate(q_movies_concalidad = (IMDB_nuevo + pelis_multiplicadopor_rt)/2 ) 
+pelis_con_calidad = q_peliculas_ajustado_calidad %>% select(-IMDB_nuevo) %>% select(-pelis_multiplicadopor_rt)
+
+
+
+#.------------------------------------------#.------------------------------------------#.------------------------------------------
+RT_avg = Streaming_full_separado_2 %>% rename(avg_rt = avg)
+generos_para_regresion_porcentaje #generos en porcentaje 
+datos_imbd_regresion #IMDb avg
+
+regrexx = full_join(ingressos_2021,ingressos_2020)
+regrexx = full_join(regrexx,cantidad_de_peliculas)
+regrexx = full_join(regrexx,pelis_con_calidad)
+regrexx = full_join(regrexx,datos_imbd_regresion)
+regrexx = full_join(regrexx,RT_avg)
+
+regrexx_con_generos = full_join(regrexx, generos_para_regresion_porcentaje)
+
+DT::datatable(regrexx_con_generos)
+
+```
+
+#### La regresion mala
+
+La regresion mala da NA y Nan por relación lineal entre las variables explicativas
+
+```{r, echo =FALSE, results='hide', message=FALSE, warning=FALSE}
+regrexx_malo_por_relacionlineal = lm(beneficios_2021 ~ beneficios_2020 + cantidad_de_movies + q_movies_concalidad + avg_IMDb + avg_rt, data=regrexx)
+
+summary(regrexx_malo_por_relacionlineal) 
+tab_model(regrexx_malo_por_relacionlineal)
+```
+
+![](regresion_mala_1.jpg){fig-align="center"}
+
+```{r, echo =FALSE, results='hide', message=FALSE, warning=FALSE}
+regrexx_malo_por_relacionIMDB_Rt= lm(beneficios_2021 ~ beneficios_2020 + cantidad_de_movies + avg_IMDb + avg_rt, data=regrexx)
+
+summary(regrexx_malo_por_relacionIMDB_Rt) 
+tab_model(regrexx_malo_por_relacionIMDB_Rt)
+```
+
+![](regresion_mala.jpg){fig-align="center"}
+
+#### La regresion buena
+
+Esta intenta explicar los ingresos 2021 con las variables presentes.
+
+```{r, echo =FALSE, results='hide', message=FALSE, warning=FALSE}
+regrexx_2 = regrexx %>% mutate(IMDB_2 = avg_IMDb*10) %>% mutate(avg_score = (avg_IMDb + avg_rt)/2) %>% select(-avg_IMDb) %>% 
+  select(-avg_rt) %>% select(-q_movies_concalidad) %>% select(-IMDB_2)
+
+regrexx_bueno = lm(beneficios_2021 ~ beneficios_2020 + cantidad_de_movies + avg_score , data=regrexx_2)
+summary(regrexx_2)
+summary(regrexx_bueno)
+
+summary(regrexx_bueno)
+tab_model(regrexx_bueno)
+
+```
+
+![](regresion_bien.jpg){fig-align="center"}
+
+```{r, echo =FALSE, results='hide', message=FALSE, warning=FALSE}
+
+regrexx_ratingsRelations = lm(avg_IMDb ~ avg_rt, data = regrexx)
+summary(regrexx_ratingsRelations) 
+tab_model(regrexx_ratingsRelations)
+
+```
+
+![](regresion.jpg){fig-align="center"}
+:::
+
+## Conclusión
+
+El cine, como lo conocemos, ya venía enfrentando estas dificultades incluso antes de la llegada del COVID-19 y el cierre indefinido de las salas alrededor del mundo. Así, la cuarentena y el distanciamiento social se convirtieron en el mejor escenario para el 'florecimiento' de las plataformas, una de las tantas fuentes de entretenimiento casero. Los más destacados son los que hemos visto anteriormente.
+
+Netflix es una de las plataformas de streaming líderes del mercado, que destaca sobre todo por la gran cantidad de producciones propias que está realizando en los últimos años. Permite múltiples perfiles de usuario, lo que lo hace perfecto para compartir, y también cuenta con múltiples producciones en diferente idiomas.
+
+Prime Video también está intentando hacerse fuerte en el sector de las plataformas de vídeo bajo demanda, y aunque hasta ahora no ha tenido producciones tan populares como las de Netflix está invirtiendo mucho en futuros contenidos. Su gran aliciente es que su suscripción es la de todo Amazon Prime, por lo que por el mismo precio cuentas con muchas ventajas en la tienda online de Amazon.
+
+Disney+ es una plataforma recién llegada a streaming, que destaca sobre todo por su amplio contenido infantil. Esta plataforma cuenta con franquicias como las de Disney, Pixar, Marvel, Star Wars y National Geographic. Es el que más perfiles permite crear para compartir.
+
+En cuanto a Hulu, tiene múltiples planes y complementos, tiene una enorme biblioteca de TV y TV en directo, la lista de canales de TV en directo incluye más de 60 canales y programas originales. Sin embargo, es inconsistente en las selecciones de las temporadas más antiguas de televisión, la televisión en directo sólo está disponible para locales, y no tiene cobertura internacional.
+
+En conclusión negar que el streaming va a dominar el entretenimiento a nivel mundial en un futuro a muy corto plazo es negar lo evidente. Aunque quizás vivamos una época complicada para el séptimo arte, cada vez estas plataformas y sus producciones propias tienen menos que envidiar a las grandes productoras y en ese punto debe residir nuestra esperanza.
