@@ -1,0 +1,135 @@
+[
+  {
+    "objectID": "blog_Streaming_services.html",
+    "href": "blog_Streaming_services.html",
+    "title": "Streaming Vs Cine",
+    "section": "",
+    "text": "Repo utilizado para elaborar el trabajo en equipo para la asignatura “Programación y manejo de datos en la era del Big Data” de la Universitat de València durante el curso 2022-2023. La página web de la asignatura puede verse: aqui"
+  },
+  {
+    "objectID": "blog_Streaming_services.html#introducción",
+    "href": "blog_Streaming_services.html#introducción",
+    "title": "Streaming Vs Cine",
+    "section": "Introducción",
+    "text": "Introducción\nLas películas son un método de entretenimiento digital y expresión artística. Permiten sumergirse en una realidad totalmente distinta, contar una historia y transmitir emociones a través de una pantalla. El consumo de películas ha cambiado a lo largo de los años, el método convencional de ver películas es el cine, pero con la evolución de la tecnología se han creado nuevos medios consumo de entretenimiento digital. Ahora existen los “Streaming Services”, que permiten disfrutar de un extenso catálogo de películas a través de internet desde la comodidad de su propia casa. Analizaremos la evolución de consumos de películas, Streaming Services VS Cine. Y, compararemos los diferentes Streaming Services usando los datos de Netflix, Disney+, PrimeVideo y Hulu."
+  },
+  {
+    "objectID": "blog_Streaming_services.html#datos",
+    "href": "blog_Streaming_services.html#datos",
+    "title": "Streaming Vs Cine",
+    "section": "Datos",
+    "text": "Datos\nObtuvimos datos de distintas fuentes para nuestra investigación.En principio, los datos sobre los ingresos de Cine lo obtuvimos de The Numbers que son basados en el mercado doméstico de cine. El mercado doméstico se define por el territorio de América del norte (Estados Unidos, Canadá, Puerto Rico y Guam). Luego, creamos un dataset con esta información el cual está en formato xlsx.\nProseguimos a realizar un dataset sobre los ingresos de los streaming services. Los ingresos de Netflix, Hulu, Disney+, AmazonPrime que incluyen PrimeVideo, Audiobooks, Digital Musica, E-books y entre otros.\nY por último obtuvimos los datos de Streaming Service de un Dataset de Kaggle sobre películas de Netflix, PrimeVideo, Hulu y Disney+ con sus correspondientes calificaciones de IMDB y Rotten Tomatoes."
+  },
+  {
+    "objectID": "blog_Streaming_services.html#análisis-según-sus-ingresos",
+    "href": "blog_Streaming_services.html#análisis-según-sus-ingresos",
+    "title": "Streaming Vs Cine",
+    "section": "Análisis según sus ingresos",
+    "text": "Análisis según sus ingresos\n\nEvolucion del cine segun sus ingresosEvolucion de los streaming services segun sus ingresosComparacion de ingresos anuales, SVOD VS Cine\n\n\n\n\n\n\n\nLos ingresos anuales de box office en su mayoria tiene una tendencia creciente, hasta que ocurre una fuerte caida. Como podemos observar, el declive de los ingresos taquilleros se debe a la pandemia de Covid-19 en el 2020. Tras este suceso, los ingresos de box office retoman la tendencia creciente aunque no a la misma magnitud antes de la pandemia.\n\n\n\n\n\n\n\nLos ingresos anuales de los streaming services tienen una tendencia creciente durante todo su periodo. Como podemos observar, los ingresos de Netflix y PrimeVideo son significativamente mayores al resto. Es importante destacar que Disney+ es relativamente nuevo, ya que su inauguración fue a finales del 2019 y esta podría ser una de la razones de sus ingresos comparativamente bajos.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLos resultados de la comparación de cine y streaming services son contundente para el cine. En el 2017, los ingresos de Netflix ya eran superiores a los ingresos de cine. Desde el 2018 los ingresos de Netflix y PrimeVideo son mayores que los de cines, en cambio Hulu aún permanece debajo del cine. Tras la pandemia de Covid-19 todos los ingresos de los streaming services son mayores que el cine. Esto nos da entender que en los últimos 6 años la audiencia se ha desviado a usar más el método de streaming service para el consumo de películas que el método tradicional del cine."
+  },
+  {
+    "objectID": "blog_Streaming_services.html#comparación-entre-los-streaming-services",
+    "href": "blog_Streaming_services.html#comparación-entre-los-streaming-services",
+    "title": "Streaming Vs Cine",
+    "section": "Comparación entre los Streaming Services",
+    "text": "Comparación entre los Streaming Services\n\nComparación entre la cantidad de peliculas según cada SVODComparación entre la cantidad de peliculas por genero según cada SVOD\n\n\n\n\n\n\n\nPodemos observar la cantidad de las peliculas disponible en Netflix y PrimeVideo es mucho mayor que Disney y Hulu. Netflix y PrimeVideo están disponible en más países que otros servicios de streaming. El tamaño de sus bibliotecas es enorme, por otro lado Disney es muy nuevo por tanto su catalogo es mas limitado. En cuanto a Hulu, su catálogo de películas está por debajo de Netflix y PrimeVideo por alrededor de 3500 películas.\n\n\n\n\n\n\n\nEl grafico muestra los top 12 géneros basados en la cantidad de películas. Comparando el número de películas por género en las 4 plataformas, observamos que los géneros de comedia y drama son lideres. Los resto de géneros muestran resultados significativos menores al género de comedia y drama.\n\n\n\n\nComparación de cada Streaming Service según sus Scores\n\nRotten TomatoesIMDb\n\n\n\n\n\n\n\nAqui podemos ver, aunque Hulu tiene el menor número de películas (según las figuras anteriores), ofrece la mejor calidad de películas según Rotten Tomatoes, por lo que merece la pena que los espectadores exploren las películas del sitio. Por el contrario, aunque Prime Video tiene el mayor número de películas, la calidad de las películas está por debajo de la media según la clasificación de Rotten Tomatoes.\n\n\n\n\n\n\n\nPodemos observar que, en comparación con Rotten Tomatoes Disney ofrece la mejor calidad de películas. Luego, Netflix y Hulu. Ambas coinciden que a pesar de su extenso catálogo Prime Video posee la mayor cantidad de películas de baja calidad."
+  },
+  {
+    "objectID": "blog_Streaming_services.html#comparación-entre-plataformas-segun-su-clasificacion-de-edad-por-pelicula",
+    "href": "blog_Streaming_services.html#comparación-entre-plataformas-segun-su-clasificacion-de-edad-por-pelicula",
+    "title": "Streaming Vs Cine",
+    "section": "Comparación entre plataformas segun su clasificacion de edad por pelicula",
+    "text": "Comparación entre plataformas segun su clasificacion de edad por pelicula\nEl cero quiere decir es disponible para todo público y podemos observar que todos tienen una alta cantidad de películas apta para todo público. En segundo lugar, Netflix, Prime Video y Hulu tiene el número más alto disponible es para los jóvenes adultos y adultos. No es de extrañar que Disney+ ofrezca la mayor cantidad de películas que pueden ver todos los grupos de edad, pero con un mayor enfoque en los niños.\n\nDistribuciónDensidad"
+  },
+  {
+    "objectID": "blog_Streaming_services.html#comparación-entre-plataformas-segun-el-año-de-estreno-por-pelicula",
+    "href": "blog_Streaming_services.html#comparación-entre-plataformas-segun-el-año-de-estreno-por-pelicula",
+    "title": "Streaming Vs Cine",
+    "section": "Comparación entre plataformas segun el año de estreno por pelicula",
+    "text": "Comparación entre plataformas segun el año de estreno por pelicula\nLa comparación ilustra que Prime Video posee un catálogo más extenso según el año de estreno por película. Disney+ igual presta un amplio catálogo de películas que extienden un extenso periodo de tiempo. Ambas poseen una variedad de peliculas estrenadas desde 1930 a 2022. En cambio, Hulu y Netflix ofrecen películas con años de estreno más recientes, especifico estrenos de los años 2000-2020.\n\nDistribuciónDensidad"
+  },
+  {
+    "objectID": "blog_Streaming_services.html#regresión",
+    "href": "blog_Streaming_services.html#regresión",
+    "title": "Streaming Vs Cine",
+    "section": "Regresión",
+    "text": "Regresión\nRealizamos una regresión entre los streaming services y sus respectivas calificaciones según Rotten Tomatoes y IMDb. El resultado de 0.498 significa que el modelo explica el 50% de la variabilidad de los datos de respuesta en torno a su media. Entonces el modelo explicar aproximadamente la mitad de la variación observada. Además, hay que tomar en cuenta que su valor de p indica una relación débil y poco significante.\n\nMuestra de que tanto influye el rating de una película en una plataforma sobre la otraLa regresion malaLa regresion buena\n\n\n\n\n\n\n\nLa regresion mala da NA y Nan por relación lineal entre las variables explicativas\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEsta intenta explicar los ingresos 2021 con las variables presentes."
+  },
+  {
+    "objectID": "blog_Streaming_services.html#conclusión",
+    "href": "blog_Streaming_services.html#conclusión",
+    "title": "Streaming Vs Cine",
+    "section": "Conclusión",
+    "text": "Conclusión\nEl cine, como lo conocemos, ya venía enfrentando estas dificultades incluso antes de la llegada del COVID-19 y el cierre indefinido de las salas alrededor del mundo. Así, la cuarentena y el distanciamiento social se convirtieron en el mejor escenario para el ‘florecimiento’ de las plataformas, una de las tantas fuentes de entretenimiento casero. Los más destacados son los que hemos visto anteriormente.\nNetflix es una de las plataformas de streaming líderes del mercado, que destaca sobre todo por la gran cantidad de producciones propias que está realizando en los últimos años. Permite múltiples perfiles de usuario, lo que lo hace perfecto para compartir, y también cuenta con múltiples producciones en diferente idiomas.\nPrime Video también está intentando hacerse fuerte en el sector de las plataformas de vídeo bajo demanda, y aunque hasta ahora no ha tenido producciones tan populares como las de Netflix está invirtiendo mucho en futuros contenidos. Su gran aliciente es que su suscripción es la de todo Amazon Prime, por lo que por el mismo precio cuentas con muchas ventajas en la tienda online de Amazon.\nDisney+ es una plataforma recién llegada a streaming, que destaca sobre todo por su amplio contenido infantil. Esta plataforma cuenta con franquicias como las de Disney, Pixar, Marvel, Star Wars y National Geographic. Es el que más perfiles permite crear para compartir.\nEn cuanto a Hulu, tiene múltiples planes y complementos, tiene una enorme biblioteca de TV y TV en directo, la lista de canales de TV en directo incluye más de 60 canales y programas originales. Sin embargo, es inconsistente en las selecciones de las temporadas más antiguas de televisión, la televisión en directo sólo está disponible para locales, y no tiene cobertura internacional.\nEn conclusión negar que el streaming va a dominar el entretenimiento a nivel mundial en un futuro a muy corto plazo es negar lo evidente. Aunque quizás vivamos una época complicada para el séptimo arte, cada vez estas plataformas y sus producciones propias tienen menos que envidiar a las grandes productoras y en ese punto debe residir nuestra esperanza."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Grupo",
+    "section": "",
+    "text": "Hola, somos Sukhman Kaur, Juliet Allegra y Juan David.\nEsta web sirve para presentar el trabajo en equipo para la asignatura “Programación y manejo de datos en la era Del Big Data”, optativa de GECO en la Facultad de Economía de la Universitat de València.\nLa web de la asignatura está aquí y los trabajos de mis compañeros de curso puedes verlos aquí.\nNuestro trabajo lleva por título : “Streaming VS Cine. El objectivo de este trabajo es analizar el mundo de entretenamineto y mostrar diferente servicios de streaming que existen y comparalos entre ellos.”\nEl trabajo puede verse aquí."
+  },
+  {
+    "objectID": "my_slides.html",
+    "href": "my_slides.html",
+    "title": "Slides para la presentación",
+    "section": "",
+    "text": "Las transparencias para presentar el trabajo en grupo están aquí."
+  },
+  {
+    "objectID": "slides.html#datos",
+    "href": "slides.html#datos",
+    "title": "Streaming VS Cine",
+    "section": "Datos",
+    "text": "Datos\n\nLos datos sobre los ingresos de Cine lo obtuvimos de The Numbers que son basados en el mercado doméstico de cine.\nProseguimos a realizar un dataset sobre los ingresos de los streaming services.\n\nLos ingresos de Netflix, Hulu, Disney+, AmazonPrime que incluyen PrimeVideo, Audiobooks, Digital Musica, E-books y entre otros.\n\nY por último obtuvimos los datos de Streaming Service de un Dataset de Kaggle sobre películas de Netflix, PrimeVideo, Hulu y Disney+ con sus correspondientes calificaciones de IMDB y Rotten Tomatoes."
+  },
+  {
+    "objectID": "slides.html#análisis-de-los-ingresos",
+    "href": "slides.html#análisis-de-los-ingresos",
+    "title": "Streaming VS Cine",
+    "section": "Análisis de los ingresos",
+    "text": "Análisis de los ingresos\n\n\n\n\nEvolución del cine segun sus ingresosEvolución de los streaming services segun sus ingresosComparación de ingresos anuales, SVOD VS Cine\n\n\nLos ingresos anuales de box office en su mayoria tiene una tendencia creciente, hasta que ocurre una fuerte caida.\n\n\n\n\n\n\n\nLos ingresos anuales de los streaming services tienen una tendencia creciente durante todo su periodo.\n\nLos ingresos de Netflix y PrimeVideo son significativamente mayores al resto.\nEs importante destacar que Disney+ es relativamente nuevo\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLos resultados de la comparación de cine y streaming services son contundente para el cine - En el 2017, los ingresos de Netflix ya eran superiores a los ingresos de cine. - Tras la pandemia de Covid-19 todos los ingresos de los streaming services son mayores que el cine."
+  },
+  {
+    "objectID": "slides.html#comparación-entre-los-streaming-services",
+    "href": "slides.html#comparación-entre-los-streaming-services",
+    "title": "Streaming VS Cine",
+    "section": "Comparación entre los Streaming Services",
+    "text": "Comparación entre los Streaming Services\n\nComparación entre la cantidad de peliculas según cada SVODComparación entre la cantidad de peliculas por genero de cada SVOD\n\n\n\n\n\n\n\nNetflix y PrimeVideo tiene un numero mucho mayor que Disney y Hulu. Netflix y PrimeVideo están disponible en más países que otros servicios de streaming.\n\n\n\n\n\n\n\nObservamos que los géneros de comedia y drama son lideres. Los resto de géneros muestran resultados significativos menores al género de comedia y drama."
+  },
+  {
+    "objectID": "slides.html#comparación-de-cada-streaming-service-según-sus-scores",
+    "href": "slides.html#comparación-de-cada-streaming-service-según-sus-scores",
+    "title": "Streaming VS Cine",
+    "section": "Comparación de cada Streaming Service según sus Scores",
+    "text": "Comparación de cada Streaming Service según sus Scores\n\nRotten TomatoesIMDb\n\n\n\n\n\n\n\nHulu que tiene el menor número de películas, ofrece la mejor calidad de películas según Rotten Tomatoes. Por el contrario, la calidad de las películas de Prime Video está por debajo de la media según esta clasificación .\n\n\n\n\n\n\n\nEn comparación con Rotten Tomatoes Disney ofrece la mejor calidad de películas. Luego, Netflix y Hulu."
+  },
+  {
+    "objectID": "slides.html#distribuciones",
+    "href": "slides.html#distribuciones",
+    "title": "Streaming VS Cine",
+    "section": "Distribuciones",
+    "text": "Distribuciones\n\nCharts de distribución age y yearDensidad\n\n\n\n\n\n\n\nEl cero quiere decir es para todo público y podemos observar que todos tienen una alta cantidad de películas apta para todo público. En segundo lugar, número más alto disponible es para los jóvenes adultos y adultos.\nDisney+ ofrezca un mayor enfoque en los niños."
+  },
+  {
+    "objectID": "slides.html#comparaciones-entre-plataformas",
+    "href": "slides.html#comparaciones-entre-plataformas",
+    "title": "Streaming VS Cine",
+    "section": "Comparaciones entre plataformas",
+    "text": "Comparaciones entre plataformas\nSegún el año de estreno por película\n\nDistribuciónDensidad\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nLa comparación ilustra que Prime Video posee un catálogo más extenso según el año de estreno por película. Disney+ igual presta un amplio catálogo de películas que extienden un extenso periodo de tiempo. Ambas poseen una variedad de peliculas estrenadas desde 1930 a 2022. En cambio, Hulu y Netflix ofrecen películas con años de estreno más recientes, especifico estrenos de los años 2000-2020."
+  },
+  {
+    "objectID": "slides.html#regresión",
+    "href": "slides.html#regresión",
+    "title": "Streaming VS Cine",
+    "section": "Regresión",
+    "text": "Regresión\nRealizamos una regresión entre los streaming services y sus respectivas calificaciones según Rotten Tomatoes y IMDb. El resultado de 0.498 significa que el modelo explica el 50% de la variabilidad de los datos de respuesta en torno a su media. Entonces el modelo explicar aproximadamente la mitad de la variación observada. Además, hay que tomar en cuenta que su valor de p indica una relación débil y poco significante.\n\nMuestra de que tanto influye el rating de una película en una plataforma sobre la otraLa regresion malaLa regresion buena\n\n\n\n\n\n\n\n\n\n\n\n\nLaregresion mala da NA y Nan por relación lineal entre las variables explicativas\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEsta intenta explicar los ingresos 2021 con las variables presentes."
+  },
+  {
+    "objectID": "slides.html#conclusión",
+    "href": "slides.html#conclusión",
+    "title": "Streaming VS Cine",
+    "section": "Conclusión",
+    "text": "Conclusión\nEn conclusión negar que el streaming va a dominar el entretenimiento a nivel mundial en un futuro a muy corto plazo es negar lo evidente. Aunque quizás vivamos una época complicada para el cine, cada vez estas plataformas y sus producciones propias tienen menos que envidiar a las grandes productoras.\n\n\n\nSlides hechas con Quarto"
+  }
+]
